@@ -1,5 +1,6 @@
 using BlogCore.Data;
 using BlogCore.DataAccess.Data;
+using BlogCore.DataAccess.Data.Repository;
 using BlogCore.Models.Entities;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -29,13 +30,19 @@ namespace BlogCore
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAutoMapper(typeof(Startup));
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            
+            services.AddScoped<IWorkContainer, WorkContainer>();
+
+            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }
 

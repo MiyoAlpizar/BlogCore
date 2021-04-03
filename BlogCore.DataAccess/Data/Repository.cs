@@ -22,10 +22,9 @@ namespace BlogCore.DataAccess.Data
             dbSet = context.Set<T>();
         }
 
-        public async Task<T> Add(T entity)
+        public T Add(T entity)
         {
             dbSet.Add(entity);
-            await context.SaveChangesAsync();
             return entity;
         }
 
@@ -55,18 +54,18 @@ namespace BlogCore.DataAccess.Data
 
         }
 
-        public async Task<T> Update<TUpdate>(int id, TUpdate update) 
+        public async Task<T> Update(int id, T update) 
         {
             var dbEntity = await dbSet.FindAsync(id);
             if (dbEntity == null)
             {
                 return null;
             }
-            var entity = mapper.Map<T>(update);
-            entity.Id = id;
-            context.Entry(entity).State = EntityState.Modified;
+            context.Entry(dbEntity).State = EntityState.Detached;  
+            context.Entry(update).State = EntityState.Modified;
             await context.SaveChangesAsync();
-            return entity;
+            
+            return update;
         }
 
         public async Task<bool> Remove(int id)

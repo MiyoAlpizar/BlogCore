@@ -15,9 +15,9 @@ namespace BlogCore.DataAccess.Data
 
         Task<T> GetFirstOrDefault(Expression<Func<T, bool>> filter = null);
 
-        Task<T> Add(T entity);
+        T Add(T entity);
 
-        Task<T> Update<TUpdate>(int id, TUpdate update);
+        Task<T> Update(int id, T update);
 
         Task<bool> Remove(int id);
 
