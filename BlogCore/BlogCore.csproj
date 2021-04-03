@@ -20,4 +20,9 @@
     <Folder Include="Areas\Admin\Controllers\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BlogCore.DataAccess\BlogCore.DataAccess.csproj" />
+    <ProjectReference Include="..\BlogCore.Models\BlogCore.Models.csproj" />
+  </ItemGroup>
+
 </Project>
