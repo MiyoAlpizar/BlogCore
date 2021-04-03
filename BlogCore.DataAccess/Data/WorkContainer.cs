@@ -22,7 +22,8 @@ namespace BlogCore.DataAccess.Data
 
         public void Dispose()
         {
-            context.Dispose();            
+            GC.SuppressFinalize(this);
+            context.Dispose();
         }
 
         public async Task Save()
